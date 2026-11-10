@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDisplayName</key><string>RUN30</string>
+    <key>CFBundleName</key><string>RUN30</string>
+    <key>CFBundleIdentifier</key><string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+    <key>CFBundleShortVersionString</key><string>1.0.0</string>
+    <key>CFBundleVersion</key><string>1</string>
+    <key>CFBundleExecutable</key><string>$(EXECUTABLE_NAME)</string>
+    <key>CFBundlePackageType</key><string>APPL</string>
+    <key>LSRequiresIPhoneOS</key><true/>
+    <key>UILaunchScreen</key><dict></dict>
+    <key>UIRequiredDeviceCapabilities</key><array><string>arm64</string><string>location-services</string></array>
+    <key>UISupportedInterfaceOrientations</key><array><string>UIInterfaceOrientationPortrait</string></array>
+    <key>NSLocationWhenInUseUsageDescription</key><string>RUN30 записывает маршрут тренировки по GPS, пока ты сам включил запись, в том числе при заблокированном экране.</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key><string>RUN30 нужен доступ к геолокации во время активной GPS-тренировки, в том числе при заблокированном экране.</string>
+    <key>UIBackgroundModes</key><array><string>location</string></array>
+</dict>
+</plist>

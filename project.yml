@@ -1,0 +1,32 @@
+name: RUN30
+options:
+  bundleIdPrefix: app.run30
+  deploymentTarget:
+    iOS: "16.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    TARGETED_DEVICE_FAMILY: "1"
+    IPHONEOS_DEPLOYMENT_TARGET: "16.0"
+    CODE_SIGNING_ALLOWED: NO
+    ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS: NO
+targets:
+  RUN30:
+    type: application
+    platform: iOS
+    sources:
+      - path: RUN30
+    info:
+      path: RUN30/Info.plist
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: app.run30.native
+        PRODUCT_NAME: RUN30
+        INFOPLIST_FILE: RUN30/Info.plist
+        GENERATE_INFOPLIST_FILE: NO
+        SWIFT_EMIT_LOC_STRINGS: NO
+        SUPPORTS_MACCATALYST: NO
+        CODE_SIGN_ENTITLEMENTS: ""
+    scheme:
+      testTargets: []

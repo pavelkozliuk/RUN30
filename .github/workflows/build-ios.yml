@@ -1,0 +1,44 @@
+name: Build unsigned iPhone IPA
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  ios:
+    runs-on: macos-15
+    timeout-minutes: 35
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+      - name: Install XcodeGen
+        run: |
+          if ! command -v xcodegen >/dev/null 2>&1; then brew install xcodegen; fi
+          xcodegen --version
+      - name: Generate Xcode project
+        run: xcodegen generate --spec project.yml
+      - name: Build for a real iPhone without signing
+        run: |
+          xcodebuild \
+            -project RUN30.xcodeproj -scheme RUN30 \
+            -configuration Release -sdk iphoneos \
+            -destination 'generic/platform=iOS' \
+            -derivedDataPath "$RUNNER_TEMP/RUN30Build" \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY='' build
+      - name: Assemble unsigned IPA for Sideloadly
+        run: |
+          set -euo pipefail
+          APP="$RUNNER_TEMP/RUN30Build/Build/Products/Release-iphoneos/RUN30.app"
+          test -d "$APP"
+          mkdir -p "$RUNNER_TEMP/ipa/Payload"
+          ditto "$APP" "$RUNNER_TEMP/ipa/Payload/RUN30.app"
+          cd "$RUNNER_TEMP/ipa"
+          /usr/bin/zip -qry "$GITHUB_WORKSPACE/RUN30-unsigned.ipa" Payload
+          unzip -l "$GITHUB_WORKSPACE/RUN30-unsigned.ipa" | grep -E 'Payload/RUN30.app/(Info.plist|RUN30)'
+      - name: Upload IPA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: RUN30-unsigned-IPA
+          path: RUN30-unsigned.ipa
+          if-no-files-found: error
+          retention-days: 14
